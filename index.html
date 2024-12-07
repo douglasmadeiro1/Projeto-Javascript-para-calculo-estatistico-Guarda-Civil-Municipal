@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Estatísticas de ocorrencias</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.3.0"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.2.0"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.2/papaparse.min.js"></script>
+    <link rel="stylesheet" href="assets/css/styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Calculo de estatística de ocorrencias</h1>
+    </div>
+    <div class="container">
+        <h1>
+            <input type="file" id="fileInput" accept=".csv, .xlsx" />
+            <button id="processFile">Processar arquivo</button>
+            <canvas id="naturezaChart" width=100% height=50%></canvas>
+            </h1>
+    </div>
+    
+
+    <script src="assets/js/script.js"></script>
+</body>
+</html>
