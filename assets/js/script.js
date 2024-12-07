@@ -2,6 +2,10 @@ document.getElementById("processFile").addEventListener("click", () => {
     const fileInput = document.getElementById("fileInput");  // Aqui, pegamos o elemento input
     const file = fileInput?.files[0];  // Aqui pegamos o arquivo selecionado (o primeiro arquivo, caso haja múltiplos)
 
+    const spinner = document.getElementById("spinner");
+    spinner.style.display = "block"; // Mostra o spinner
+    setTimeout(() => spinner.style.display = "none", 3000);
+
     if (!file) {
         alert("Por favor, selecione um arquivo");
         return;
@@ -10,16 +14,24 @@ document.getElementById("processFile").addEventListener("click", () => {
     const reader = new FileReader();
 
     reader.onload = function (e) {
-        const data = e.target.result; // 'result' agora é um ArrayBuffer
-
-        // Verifica se o arquivo é um Excel ou CSV
-        if (file.name.endsWith(".xlsx")) {  // Usando name do arquivo para verificar a extensão
-            processExcel(data);
+        const data = e.target.result;
+    
+        if (file.name.endsWith(".xlsx")) {
+            processExcel(data); // XLSX usa ArrayBuffer
+        } else if (file.name.endsWith(".xls")) {
+            processExcel(data, true); // XLS usa BinaryString
         } else if (file.name.endsWith(".csv")) {
             processCSV(data);
         } else {
             alert("Formato de arquivo não suportado.");
         }
+    };
+    
+    // Use o método adequado para cada tipo de arquivo
+    if (file.name.endsWith(".xls")) {
+        reader.readAsBinaryString(file); // XLS requer BinaryString
+    } else {
+        reader.readAsArrayBuffer(file); // Outros formatos podem usar ArrayBuffer
     };
 
     // Usando readAsArrayBuffer, que é a forma recomendada
@@ -39,12 +51,16 @@ function processCSV(data) {
     
 }
 
-function processExcel(data) {
+function processExcel(data, isXLS = false) {
     const XLSX = window.XLSX;
-    // Modifiquei a leitura para trabalhar com ArrayBuffer
-    const workbook = XLSX.read(data, { type: "array" });  // Usando 'array' para ArrayBuffer
-    const sheetName = workbook.SheetNames[0];  // Ajustado para pegar o nome da primeira aba
+
+    // Tipo de entrada é diferente para arquivos XLS
+    const options = isXLS ? { type: "binary" } : { type: "array" };
+
+    const workbook = XLSX.read(data, options);
+    const sheetName = workbook.SheetNames[0]; // Primeira aba
     const worksheet = workbook.Sheets[sheetName];
+
     const jsonData = XLSX.utils.sheet_to_json(worksheet);
     const naturezas = jsonData.map((row) => row["Natureza"]);
     gerarEstatisticas(naturezas);
@@ -210,18 +226,10 @@ function gerarEstatisticas(naturezas) {
 
     for (const natureza of naturezas) {
         let categorizada = false;
-
-        // Normaliza a natureza para evitar problemas com espaços ou maiúsculas
-        const naturezaNormalizada = natureza
-            ? natureza.toLowerCase().trim()
-            : "";
+        const naturezaNormalizada = natureza ? natureza.toLowerCase().trim() : "";
 
         for (const [categoria, palavrasChave] of Object.entries(categorias)) {
-            if (
-                palavrasChave.some((palavra) =>
-                    naturezaNormalizada.includes(palavra.trim().toLowerCase())
-                )
-            ) {
+            if (palavrasChave.some((palavra) => naturezaNormalizada.includes(palavra.trim().toLowerCase()))) {
                 contagem[categoria] = (contagem[categoria] || 0) + 1;
                 categorizada = true;
                 break;
@@ -240,8 +248,11 @@ function gerarEstatisticas(naturezas) {
 
 function exibirGrafico(dados) {
     const ctx = document.getElementById("naturezaChart").getContext("2d");
-    const labels = Object.keys(dados);
-    const valores = Object.values(dados);
+
+    // Ordenar os dados em ordem decrescente
+    const dadosOrdenados = Object.entries(dados).sort((a, b) => b[1] - a[1]); // Maior para menor
+    const labels = dadosOrdenados.map(([key]) => key);
+    const valores = dadosOrdenados.map(([_, value]) => value);
 
     const cores = [
         "rgba(255, 99, 132, 0.5)", 
@@ -267,7 +278,7 @@ function exibirGrafico(dados) {
             labels: labels,
             datasets: [
                 {
-                    label: "Quantidade de Incidências", // Ainda presente na legenda
+                    label: "Quantidade de Incidências", 
                     data: valores,
                     backgroundColor: cores.slice(0, labels.length),
                     borderColor: coresBorda.slice(0, labels.length),
@@ -279,15 +290,15 @@ function exibirGrafico(dados) {
             responsive: true,
             plugins: {
                 legend: {
-                    display: false, // Esconde o título da legenda
+                    display: false,
                 },
                 tooltip: {
                     enabled: true,
                 },
                 datalabels: {
-                    anchor: "end", // Ajusta a âncora do rótulo
-                    align: "end", // Posiciona ao final (acima da barra)
-                    formatter: (value) => value, // Mostra o valor diretamente
+                    anchor: "end",
+                    align: "end",
+                    formatter: (value) => value,
                     color: "black",
                     font: {
                         size: 14,
@@ -298,10 +309,10 @@ function exibirGrafico(dados) {
             scales: {
                 y: {
                     beginAtZero: true,
-                    max: Math.max(...valores) * 1.2, // Adiciona espaço no topo
+                    max: Math.max(...valores) * 1.2, 
                 },
             },
         },
-        plugins: [ChartDataLabels], // Adiciona o plugin
+        plugins: [ChartDataLabels], 
     });
 }
