@@ -254,6 +254,9 @@ function exibirGrafico(dados) {
     const labels = dadosOrdenados.map(([key]) => key);
     const valores = dadosOrdenados.map(([_, value]) => value);
 
+    // Calcular o total das ocorrências
+    const total = valores.reduce((acc, curr) => acc + curr, 0);
+
     const cores = [
         "rgba(255, 99, 132, 0.5)", 
         "rgba(54, 162, 235, 0.5)", 
@@ -303,6 +306,14 @@ function exibirGrafico(dados) {
                     font: {
                         size: 14,
                         weight: "bold",
+                    },
+                },
+                title: {
+                    display: true,
+                    text: `Total de Ocorrências: ${total}`, // Exibe o total no título
+                    font: {
+                        size: 18,
+                        weight: 'bold',
                     },
                 },
             },
