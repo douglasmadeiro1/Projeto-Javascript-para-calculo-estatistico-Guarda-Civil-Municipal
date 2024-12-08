@@ -276,7 +276,7 @@ function exibirGrafico(dados) {
     ];
 
     new Chart(ctx, {
-        type: "bar",
+        type: "pir",
         data: {
             labels: labels,
             datasets: [
