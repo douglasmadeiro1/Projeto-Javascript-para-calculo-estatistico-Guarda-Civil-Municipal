@@ -275,32 +275,45 @@ function exibirGrafico(dados) {
     ];
 
     new Chart(ctx, {
-    type: "pie",
+    type: "line",
     data: {
         labels: labels, // Categorias
         datasets: [
             {
-                label: "Proporção de Incidências",
+                label: "Quantidade de Incidências",
                 data: valores, // Quantidades
-                backgroundColor: [
-                    "rgba(255, 99, 132, 0.5)",
-                    "rgba(54, 162, 235, 0.5)",
-                    "rgba(255, 206, 86, 0.5)",
-                    "rgba(75, 192, 192, 0.5)",
-                    "rgba(153, 102, 255, 0.5)",
-                    "rgba(255, 159, 64, 0.5)",
-                ],
-                borderColor: [
-                    "rgba(255, 99, 132, 1)",
-                    "rgba(54, 162, 235, 1)",
-                    "rgba(255, 206, 86, 1)",
-                    "rgba(75, 192, 192, 1)",
-                    "rgba(153, 102, 255, 1)",
-                    "rgba(255, 159, 64, 1)",
-                ],
-                borderWidth: 1,
+                borderColor: "rgba(75, 192, 192, 1)",
+                backgroundColor: "rgba(75, 192, 192, 0.2)", // Área abaixo da linha
+                fill: true,
+                tension: 0.4, // Curvatura da linha
             },
         ],
     },
-   
-}
+    options: {
+        responsive: true,
+        plugins: {
+            legend: {
+                display: true,
+            },
+            title: {
+                display: true,
+                text: "Ocorrências por Categoria",
+            },
+        },
+        scales: {
+            x: {
+                title: {
+                    display: true,
+                    text: "Categorias",
+                },
+            },
+            y: {
+                title: {
+                    display: true,
+                    text: "Quantidade",
+                },
+                beginAtZero: true,
+            },
+        },
+    },
+});
