@@ -4,7 +4,7 @@ document.getElementById("processFile").addEventListener("click", () => {
 
     const spinner = document.getElementById("spinner");
     spinner.style.display = "block"; // Mostra o spinner
-    setTimeout(() => spinner.style.display = "none", 3000);
+    setTimeout(() => spinner.style.display = "none", 1500);
 
     if (!file) {
         alert("Por favor, selecione um arquivo");
@@ -245,7 +245,6 @@ function gerarEstatisticas(naturezas) {
     exibirGrafico(contagem);
 }
 
-
 function exibirGrafico(dados) {
     const ctx = document.getElementById("naturezaChart").getContext("2d");
 
@@ -276,54 +275,32 @@ function exibirGrafico(dados) {
     ];
 
     new Chart(ctx, {
-        type: "pir",
-        data: {
-            labels: labels,
-            datasets: [
-                {
-                    label: "Quantidade de Incidências", 
-                    data: valores,
-                    backgroundColor: cores.slice(0, labels.length),
-                    borderColor: coresBorda.slice(0, labels.length),
-                    borderWidth: 1,
-                },
-            ],
-        },
-        options: {
-            responsive: true,
-            plugins: {
-                legend: {
-                    display: false,
-                },
-                tooltip: {
-                    enabled: true,
-                },
-                datalabels: {
-                    anchor: "end",
-                    align: "end",
-                    formatter: (value) => value,
-                    color: "black",
-                    font: {
-                        size: 14,
-                        weight: "bold",
-                    },
-                },
-                title: {
-                    display: true,
-                    text: `Total de Ocorrências: ${total}`, // Exibe o total no título
-                    font: {
-                        size: 18,
-                        weight: 'bold',
-                    },
-                },
+    type: "pie",
+    data: {
+        labels: labels, // Categorias
+        datasets: [
+            {
+                label: "Proporção de Incidências",
+                data: valores, // Quantidades
+                backgroundColor: [
+                    "rgba(255, 99, 132, 0.5)",
+                    "rgba(54, 162, 235, 0.5)",
+                    "rgba(255, 206, 86, 0.5)",
+                    "rgba(75, 192, 192, 0.5)",
+                    "rgba(153, 102, 255, 0.5)",
+                    "rgba(255, 159, 64, 0.5)",
+                ],
+                borderColor: [
+                    "rgba(255, 99, 132, 1)",
+                    "rgba(54, 162, 235, 1)",
+                    "rgba(255, 206, 86, 1)",
+                    "rgba(75, 192, 192, 1)",
+                    "rgba(153, 102, 255, 1)",
+                    "rgba(255, 159, 64, 1)",
+                ],
+                borderWidth: 1,
             },
-            scales: {
-                y: {
-                    beginAtZero: true,
-                    max: Math.max(...valores) * 1.2, 
-                },
-            },
-        },
-        plugins: [ChartDataLabels], 
-    });
+        ],
+    },
+   
 }
