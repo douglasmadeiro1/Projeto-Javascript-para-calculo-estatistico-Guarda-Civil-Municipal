@@ -4,7 +4,7 @@ document.getElementById("processFile").addEventListener("click", () => {
 
     const spinner = document.getElementById("spinner");
     spinner.style.display = "block"; // Mostra o spinner
-    setTimeout(() => spinner.style.display = "none", 3000);
+    setTimeout(() => spinner.style.display = "none", 1500);
 
     if (!file) {
         alert("Por favor, selecione um arquivo");
@@ -245,7 +245,6 @@ function gerarEstatisticas(naturezas) {
     exibirGrafico(contagem);
 }
 
-
 function exibirGrafico(dados) {
     const ctx = document.getElementById("naturezaChart").getContext("2d");
 
@@ -276,54 +275,45 @@ function exibirGrafico(dados) {
     ];
 
     new Chart(ctx, {
-        type: "bar",
-        data: {
-            labels: labels,
-            datasets: [
-                {
-                    label: "Quantidade de Incidências", 
-                    data: valores,
-                    backgroundColor: cores.slice(0, labels.length),
-                    borderColor: coresBorda.slice(0, labels.length),
-                    borderWidth: 1,
-                },
-            ],
+    type: "line",
+    data: {
+        labels: labels, // Categorias
+        datasets: [
+            {
+                label: "Quantidade de Incidências",
+                data: valores, // Quantidades
+                borderColor: "rgba(75, 192, 192, 1)",
+                backgroundColor: "rgba(75, 192, 192, 0.2)", // Área abaixo da linha
+                fill: true,
+                tension: 0.4, // Curvatura da linha
+            },
+        ],
+    },
+    options: {
+        responsive: true,
+        plugins: {
+            legend: {
+                display: true,
+            },
+            title: {
+                display: true,
+                text: "Ocorrências por Categoria",
+            },
         },
-        options: {
-            responsive: true,
-            plugins: {
-                legend: {
-                    display: false,
-                },
-                tooltip: {
-                    enabled: true,
-                },
-                datalabels: {
-                    anchor: "end",
-                    align: "end",
-                    formatter: (value) => value,
-                    color: "black",
-                    font: {
-                        size: 14,
-                        weight: "bold",
-                    },
-                },
+        scales: {
+            x: {
                 title: {
                     display: true,
-                    text: `Total de Ocorrências: ${total}`, // Exibe o total no título
-                    font: {
-                        size: 18,
-                        weight: 'bold',
-                    },
+                    text: "Categorias",
                 },
             },
-            scales: {
-                y: {
-                    beginAtZero: true,
-                    max: Math.max(...valores) * 1.2, 
+            y: {
+                title: {
+                    display: true,
+                    text: "Quantidade",
                 },
+                beginAtZero: true,
             },
         },
-        plugins: [ChartDataLabels], 
-    });
-}
+    },
+});
