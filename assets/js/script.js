@@ -66,6 +66,7 @@ function gerarEstatisticas(planilha) {
         Permanencia_área_central: [
             "Parada / Permanência  Preventiva - ÁREA CENTRAL",
             "Parada / Permanência  Preventiva - PRAÇA CENTRAL",
+            "Parada / Permanência  Preventiva - ÁREA CENTRAL / Patrulhamento preventivo",
         ],
         Permanencia_rodoviária: [
             "Parada / Permanência  Preventiva - Rodoviária ",
@@ -82,6 +83,7 @@ function gerarEstatisticas(planilha) {
         ],
         Permanencia_câmara_municipal: [
             "Parada / Permanência  Preventiva - Câmara Municipal ",
+            "Parada / Permanência  Preventiva - Câmara Municipal  / Parada / Permanência  Preventiva ",
         ],
         Permanencia_cachoeira_de_emas: [
             "Parada / Permanência  Preventiva - CACHOEIRA DE EMAS",
@@ -90,28 +92,52 @@ function gerarEstatisticas(planilha) {
             "Parada / Permanência  Preventiva ",
             "parada / permanência preventiva - outros órgãos públicos",
         ],
+        Permanencia_complexo_exportivo: [
+            "Parada / Permanência  Preventiva - COMPLEXO ESPORTIVO",
+        ],
+        Atentado_ao_pudor: [
+            "Ato obsceno",
+        ],
         Apoio: [
             "Apoio",
+            "Apoio a GM de Serviço",
         ],
         Apoio_ONGs: [
             "Apoio a ONGs",
+            "Apoio a ONGs / Animal em via pública",
         ],
         Apoio_policia_militar_bombeiros: [
             "Apoio a Militar/Policial Militar/Bombeiro",
+            "Apoio a Militar/Policial Militar/Bombeiro / Incêndio Área Rural",
         ],
         Apoio_SAMU: [
             "Apoio a Orgãos  de  Saúde , Santa Casa  - PS - UBS - UPA - CAPS",
             "Apoio Samu",
+            "Apoio Samu / Averiguação Atitude Suspeita",
+            "Apoio Samu / Surto psicótico - atendimento/encaminhamento",
+            "Surto psicótico - atendimento/encaminhamento",
+            "Surto psicótico - atendimento/encaminhamento / Apoio Samu",
         ],
         Apoio_conselho_tutelar: [
             "Apoio Conselho Tutelar",
+            "Apoio Conselho Tutelar / Apoio",
+        ],
+        Abandono_de_incapaz: [
+            "Abandono de incapaz / Apoio Conselho Tutelar",
         ],
         Apoio_evento: [
             "Apoio/Monitoramento a eventos",
+            "Apoio/Monitoramento a eventos / Acompanhamento - Manifestação pública",
+            "Prevenção em festas / eventos diversos",
+            "Acompanhamento - Manifestação Religiosa - Procissão",
+            "Acompanhamento - manifestação pública - passeata",
         ],
         Apoio_outros_orgãos: [
             "Apoio a outros órgãos",
             "Apoio Órgãos Públicos",
+            "Apoio Órgãos Privados",
+            "Apoio a Casa de Acolhimento",
+            "Apoio a Casa abrigo / Apoio Samu",
         ],
         Auxilio_ao_público: [
             "Auxílio ao público - Cidadão",         
@@ -121,27 +147,102 @@ function gerarEstatisticas(planilha) {
             "Averiguação / Outros",
             "Averiguação Atitude Suspeita",
             "Conduta Inconveniente",
+            "Averiguação Atitude Suspeita / Abordagem a veículo",
+            "Averiguação Atitude Suspeita / Averiguação / Outros",
+        ],
+        Apoio_policia_civil: [
+            "Apoio a Policia Civil",
+            "Preservação local para perícia",
+        ],
+        Apoio_DEMUTRAN: [
+            "APOIO AO DEPARTAMENTO DE TRÂNSITO ",
+            "Isolamento de Via",
+            "Isolamento de Via / Cabos e fios caidos",
+            "Óleo na via",
+        ],
+        Apoio_outras_secretarias: [
+            "Apoio ao Setor de Educação",
+        ],
+        Apoio_oficial_de_justiça: [
+            "Apoio Oficial de Justiça",
+        ],
+        Treinamentos: [
+            "TREINAMENTO COM CÃES",
+            "Instrução/Treinamento",
+        ],
+        Apoio_defesa_civil: [
+            "Cabos e fios caidos",
+            "Apoio a defesa civil",
+            "Queda de Árvore",
+        ],
+        Cumprimento_mandado_de_prisão: [
+            "Cumprimento de Mandado de Prisão",
+            "Cumprimento de Mandado  Busca e Apreensão",
+        ],
+        Depredação: [
+            "Dano/Depredação Patrimônio Público",
+            "Depredação"
+        ],
+        Localização_de_pessoa_perdida: [
+            "Localização de pessoa perdida",
+        ],
+        incendio: [
+            "Incêndio em vegetação",
+            "Incêndio",
+        ],
+        Disparo_de_arma_de_fogo: [
+            "Disparo de arma de fogo",
         ],
         Desinteligencia: [
             "Desinteligência",
+            "Desinteligência / Averiguação de Uso de Drogas",
         ],
         Furto: [
             "Averiguação de Furto",
+            "Averiguação Atitude Suspeita / Localização de Veículo roubado/furtado/clonado",
+            "Tentativa de furto",
+            "Averiguação / Outros / Apropriação indébita",
+            "Furto",
+            "Furto / Averiguação de Furto",
+            "Furto de veículo",
+            "Localização de Veículo roubado/furtado/clonado / Apoio a Militar/Policial Militar/Bombeiro",
         ],
         Ocorrencia_com_drogas: [
             "Averiguação de Uso de Drogas",
             "Localização de drogas",
             "Tráfico de drogas",
+            "Averiguação de Uso de Drogas / Tráfico de drogas",
+            "Porte de drogas para consumo pessoal",
+            "Porte de drogas para consumo pessoal / Conduzir veículo sem a devida CNH gerando perigo de dano",
+            "Porte de drogas para consumo pessoal / Infração de trânsito / Denúncia",
+
         ],
         Invasão: [
             "Comunicação de invasão",
             "Invasão à proprio municipal - estadual",
+            "Invasão à proprio municipal - estadual / Apoio a GM de Serviço",
+            "Arrombamento",
+            "Acampamento em local indevido",
+        ],
+        Escolta: [
+            "Escolta",
+        ],
+        Captura_de_procurado: [
+            "Recaptura de foragido",
+            "Averiguação / Outros / Recaptura de foragido",
+        ],
+        Crime_eleitoral: [
+            "AVERIGUAÇÃO DE CRIME ELEITORAL",
+        ],
+        Averiguação_alarme:[
+            "Averiguação de Disparo de Alarme",
         ],
         Pessoa_desaparecida: [
             "Desaparecimento de pessoa",
         ],
         Descumprimento_de_medida_protetiva: [
             "Descumprimento de Ordem Judicial/Medida Protetiva / Averiguação / Outros",
+            "Atendimento de Medida Protetiva",
         ],
         Encontro_de_cadaver: [
             "Encontro de cadáver",
@@ -150,18 +251,31 @@ function gerarEstatisticas(planilha) {
             "Fiscalização de Posturas",
             "Perturbação do trabalho ou do sossego alheio",
             "Perturbação da tranquilidade",
-            "Averiguação Ambiental",
+            "Descarte irregular de resíduo",
+            "Fiscalização de Posturas / Ordem de Serviço",
+            "Fiscalização de Posturas / Perturbação da tranquilidade",
         ],
-        Lesão_corporal: [
+        Averiguação_ambiental: [
+            "Averiguação Ambiental",
+            "Pesca proibida",
+        ],
+        Agressão: [
             "Averiguação / Outros / Agressão",
             "Lesão corporal",
             "Lesão corporal / Ameaça",
+            "Vias de fato",
+            "Agressão",
+        ],
+        Ameaça: [
+            "Ameaça",
+            "Ameaça / Dano",
         ],
         Operação_saturação: [
             "Operação Saturação",
         ],
         Roubo: [
             "Roubo",
+            "Averiguação de Roubo",
         ],
         Tentativa_de_suicídio: [
             "Tentativa de suicídio",
@@ -182,16 +296,42 @@ function gerarEstatisticas(planilha) {
             "Infração de trânsito / Denúncia / Porte de drogas para consumo pessoal",
             "Infração de trânsito / Embriaguez / Denúncia",
             "Remoção de veículo",
+            "Averiguação de Veiculo / Embriaguez",
+            "Direção perigosa de veículo em via pública",
+            "Direção perigosa de veículo em via pública - motos",
+            "Embriaguez / Direção perigosa de veículo em via pública",
+            "Estacionar em rebaixo de meio-Fio destinado a entrada e saída de veículo automotor",
+            "Infração de trânsito / Denúncia / Abordagem a pessoas em atitude suspeita",
+            "Infração de trânsito / Denúncia / Acidente de trânsito sem vítima",
+            "Infração de trânsito / Denúncia / Averiguação de Veiculo",
+            "Infração de trânsito / Fiscalização e policiamento / Denúncia",
+            "Veículo abandonado em via pública",
+            "Conduzir veículo sem a devida CNH gerando perigo de dano",
         ],
         Violência_doméstica: [
             "Violência doméstica",
+            "Auxílio ao público - Cidadão / Violência Doméstica Contra a Mulher/Maria da Penha",
+            "Violência Doméstica Contra a Mulher/Maria da Penha",
+            "Ameaça Contra a Mulher",
+            "Cárcere Privado Contra a Mulher / Apoio Conselho Tutelar",
+            "Cárcere Privado Contra a Mulher / Desinteligência",
         ],
         Ocorrencia_com_animais: [
             "Maus-tratos a animais",
             "Ocorrência envolvendo animais",
+            "Maus-tratos a animais",
+            "Maus-tratos a animais / Apoio a ONGs",
+            "Animal em via pública",
+            "Animal com sinal de maus tratos",
+            "Animal Solto em Local de Risco",
+            "Averiguação Ambiental / Maus-tratos a animais",
+            "Introdução ou abandono de animais em propriedade alheia",
         ],
         Porte_de_arma_branca: [
             "Porte de arma branca / Desacato / Porte de drogas para consumo pessoal",
+            "Violência doméstica / Averiguação / Outros",
+            "Localização de arma branca / Violência doméstica"
+
         ],
         Localização_de_veículo: [
             "Localização de veículo",
@@ -205,6 +345,16 @@ function gerarEstatisticas(planilha) {
         Patrulhamento_em_próprios_públicos: [
             "Patrulhamento preventivo",
             "Parada / Permanência  Preventiva - OUTROS ORGÃOS PUBLICOS",
+        ],
+        Ordem_de_serviço: [
+            "Ordem de Serviço",
+        ],
+        Localização_de_arma_de_fogo: [
+            "Localização de arma de fogo / Localização de objetos diversos",
+        ],
+        Localização_de_objetos: [
+            "Localização de objetos diversos",
+            "Localização de objetos diversos / Averiguação Atitude Suspeita",
         ],
     };
 
