@@ -124,6 +124,7 @@ function gerarEstatisticas(planilha) {
         ],
         Abandono_de_incapaz: [
             "Abandono de incapaz / Apoio Conselho Tutelar",
+            "Abandonar idoso em hospitais / Apoio a outros órgãos"
         ],
         Apoio_evento: [
             "Apoio/Monitoramento a eventos",
@@ -243,6 +244,7 @@ function gerarEstatisticas(planilha) {
         Descumprimento_de_medida_protetiva: [
             "Descumprimento de Ordem Judicial/Medida Protetiva / Averiguação / Outros",
             "Atendimento de Medida Protetiva",
+            "Descumprimento de Ordem Judicial/Medida Protetiva",
         ],
         Encontro_de_cadaver: [
             "Encontro de cadáver",
@@ -330,8 +332,7 @@ function gerarEstatisticas(planilha) {
         Porte_de_arma_branca: [
             "Porte de arma branca / Desacato / Porte de drogas para consumo pessoal",
             "Violência doméstica / Averiguação / Outros",
-            "Localização de arma branca / Violência doméstica"
-
+            "Localização de arma branca / Violência doméstica",
         ],
         Localização_de_veículo: [
             "Localização de veículo",
