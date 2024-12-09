@@ -4,7 +4,7 @@ document.getElementById("processFile").addEventListener("click", () => {
 
     const spinner = document.getElementById("spinner");
     spinner.style.display = "block"; // Mostra o spinner
-    setTimeout(() => spinner.style.display = "none", 1500);
+    setTimeout(() => spinner.style.display = "none", 3000);
 
     if (!file) {
         alert("Por favor, selecione um arquivo");
@@ -245,6 +245,7 @@ function gerarEstatisticas(naturezas) {
     exibirGrafico(contagem);
 }
 
+
 function exibirGrafico(dados) {
     const ctx = document.getElementById("naturezaChart").getContext("2d");
 
@@ -252,9 +253,6 @@ function exibirGrafico(dados) {
     const dadosOrdenados = Object.entries(dados).sort((a, b) => b[1] - a[1]); // Maior para menor
     const labels = dadosOrdenados.map(([key]) => key);
     const valores = dadosOrdenados.map(([_, value]) => value);
-
-    // Calcular o total das ocorrências
-    const total = valores.reduce((acc, curr) => acc + curr, 0);
 
     const cores = [
         "rgba(255, 99, 132, 0.5)", 
@@ -275,45 +273,46 @@ function exibirGrafico(dados) {
     ];
 
     new Chart(ctx, {
-    type: "line",
-    data: {
-        labels: labels, // Categorias
-        datasets: [
-            {
-                label: "Quantidade de Incidências",
-                data: valores, // Quantidades
-                borderColor: "rgba(75, 192, 192, 1)",
-                backgroundColor: "rgba(75, 192, 192, 0.2)", // Área abaixo da linha
-                fill: true,
-                tension: 0.4, // Curvatura da linha
-            },
-        ],
-    },
-    options: {
-        responsive: true,
-        plugins: {
-            legend: {
-                display: true,
-            },
-            title: {
-                display: true,
-                text: "Ocorrências por Categoria",
-            },
+        type: "bar",
+        data: {
+            labels: labels,
+            datasets: [
+                {
+                    label: "Quantidade de Incidências", 
+                    data: valores,
+                    backgroundColor: cores.slice(0, labels.length),
+                    borderColor: coresBorda.slice(0, labels.length),
+                    borderWidth: 1,
+                },
+            ],
         },
-        scales: {
-            x: {
-                title: {
-                    display: true,
-                    text: "Categorias",
+        options: {
+            responsive: true,
+            plugins: {
+                legend: {
+                    display: false,
+                },
+                tooltip: {
+                    enabled: true,
+                },
+                datalabels: {
+                    anchor: "end",
+                    align: "end",
+                    formatter: (value) => value,
+                    color: "black",
+                    font: {
+                        size: 14,
+                        weight: "bold",
+                    },
                 },
             },
-            y: {
-                title: {
-                    display: true,
-                    text: "Quantidade",
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    max: Math.max(...valores) * 1.2, 
                 },
-                beginAtZero: true,
             },
         },
-    },
-});
+        plugins: [ChartDataLabels], 
+    });
+}
