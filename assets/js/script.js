@@ -4,7 +4,7 @@ document.getElementById("processFile").addEventListener("click", () => {
 
     const spinner = document.getElementById("spinner");
     spinner.style.display = "block"; // Mostra o spinner
-    setTimeout(() => spinner.style.display = "none", 3000);
+    setTimeout(() => spinner.style.display = "none", 1500);
 
     if (!file) {
         alert("Por favor, selecione um arquivo");
@@ -39,34 +39,29 @@ document.getElementById("processFile").addEventListener("click", () => {
 });
 
 function processCSV(data) {
-    // Papa.parse aceita ArrayBuffer diretamente como entrada
     Papa.parse(data, {
-        header: true,
+        header: false, // Ler como matriz
         complete: (results) => {
-            console.log("Dados CSV processados:", results.data);
-            const naturezas = results.data.map((row) => row["Natureza"]);
-            gerarEstatisticas(naturezas);
+            const planilha = results.data;
+            console.log("Dados CSV processados:", planilha);
+            gerarEstatisticas(planilha);
         },
     });
-    
 }
 
 function processExcel(data, isXLS = false) {
     const XLSX = window.XLSX;
 
-    // Tipo de entrada é diferente para arquivos XLS
     const options = isXLS ? { type: "binary" } : { type: "array" };
 
     const workbook = XLSX.read(data, options);
-    const sheetName = workbook.SheetNames[0]; // Primeira aba
+    const sheetName = workbook.SheetNames[0];
     const worksheet = workbook.Sheets[sheetName];
 
-    const jsonData = XLSX.utils.sheet_to_json(worksheet);
-    const naturezas = jsonData.map((row) => row["Natureza"]);
-    gerarEstatisticas(naturezas);
+    const jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1 }); // Obter os dados como uma matriz 2D
+    gerarEstatisticas(jsonData);
 }
-
-function gerarEstatisticas(naturezas) {
+function gerarEstatisticas(planilha) {
     const categorias = {
         Permanencia_área_central: [
             "Parada / Permanência  Preventiva - ÁREA CENTRAL",
@@ -91,24 +86,15 @@ function gerarEstatisticas(naturezas) {
         Permanencia_cachoeira_de_emas: [
             "Parada / Permanência  Preventiva - CACHOEIRA DE EMAS",
         ],
-        Permanencia_feira: [
-            "Parada / Permanência  Preventiva - FEIRA LIVRE",
-        ],
         Permanencia_próprios_municipais: [
             "Parada / Permanência  Preventiva ",
-            "Parada / Permanência  Preventiva - ÁREA CENTRAL",
-            "Parada / Permanência  Preventiva - CACHOEIRA DE EMAS",
-            "Parada / Permanência  Preventiva - Câmara Municipal ",
-            "Parada / Permanência  Preventiva - FEIRA LIVRE",
             "parada / permanência preventiva - outros órgãos públicos",
-        ],
-        Apoio_geral: [
-            "apoio",
-            "apoio a ongs",
-            "apoio a órgãos de saúde , santa casa - ps - ubs - upa - caps",
         ],
         Apoio: [
             "Apoio",
+        ],
+        Apoio_ONGs: [
+            "Apoio a ONGs",
         ],
         Apoio_policia_militar_bombeiros: [
             "Apoio a Militar/Policial Militar/Bombeiro",
@@ -154,7 +140,7 @@ function gerarEstatisticas(naturezas) {
         Pessoa_desaparecida: [
             "Desaparecimento de pessoa",
         ],
-        Descumbrimento_de_medida_protetiva: [
+        Descumprimento_de_medida_protetiva: [
             "Descumprimento de Ordem Judicial/Medida Protetiva / Averiguação / Outros",
         ],
         Encontro_de_cadaver: [
@@ -184,24 +170,23 @@ function gerarEstatisticas(naturezas) {
             "Acidente / Acidente de trânsito com vítima",
             "Acidente de trânsito com vítima",
             "Acidente de trânsito com vítima / Acidente de trânsito sem vítima / Acidente com Lesão Corporal",
-            "Averiguação de Veiculo",
             "Acidente de trânsito sem vítima",
+            "Averiguação de Veiculo",
             "Averiguação de Veiculo / Acidente de trânsito com vítima",
             "Denúncia / Infração de trânsito",
             "Denúncia / Infração de trânsito / Fiscalização e policiamento - tráfego",
+            "Embriaguez / Averiguação / Outros",
             "Fiscalização e policiamento - tráfego",
             "Fiscalização e policiamento - tráfego / Infração de trânsito / Denúncia",
             "Infração de trânsito / Denúncia",
             "Infração de trânsito / Denúncia / Porte de drogas para consumo pessoal",
             "Infração de trânsito / Embriaguez / Denúncia",
             "Remoção de veículo",
-            "Embriaguez / Averiguação / Outros",
         ],
         Violência_doméstica: [
             "Violência doméstica",
         ],
         Ocorrencia_com_animais: [
-            "Apoio a ONGs",
             "Maus-tratos a animais",
             "Ocorrência envolvendo animais",
         ],
@@ -214,45 +199,70 @@ function gerarEstatisticas(naturezas) {
         Pessoa_indigente: [
             "Pessoa indigente",
         ],
-        Deslocamento_administrativo: [
+        Serviço_administrativo: [
             "Deslocamento Administrativo",
         ],
         Patrulhamento_em_próprios_públicos: [
             "Patrulhamento preventivo",
+            "Parada / Permanência  Preventiva - OUTROS ORGÃOS PUBLICOS",
         ],
     };
 
     const contagem = {};
 
-    for (const natureza of naturezas) {
-        let categorizada = false;
-        const naturezaNormalizada = natureza ? natureza.toLowerCase().trim() : "";
+    for (const linha of planilha) {
+        for (const celula of linha) {
+            if (!celula) continue; // Ignorar células vazias
 
-        for (const [categoria, palavrasChave] of Object.entries(categorias)) {
-            if (palavrasChave.some((palavra) => naturezaNormalizada.includes(palavra.trim().toLowerCase()))) {
-                contagem[categoria] = (contagem[categoria] || 0) + 1;
-                categorizada = true;
-                break;
+            let categorizada = false;
+            const textoNormalizado = celula.toString().toLowerCase().trim();
+
+            for (const [categoria, palavrasChave] of Object.entries(categorias)) {
+                if (palavrasChave.some((palavra) => celula.trim() === palavra.trim())) {
+                    contagem[categoria] = (contagem[categoria] || 0) + 1;
+                    categorizada = true;
+                    break;
+                }
             }
-        }
 
-        if (!categorizada) {
-            contagem["Outros"] = (contagem["Outros"] || 0) + 1;
+            /* if (!categorizada) {
+                contagem["Outros"] = (contagem["Outros"] || 0) + 1;
+            }
+                */
+
         }
     }
 
-    console.log("Contagem de Categorias:", contagem); // Depuração
+    console.log("Contagem de Categorias:", contagem);
     exibirGrafico(contagem);
+}
+
+function processCSV(data) {
+    Papa.parse(data, {
+        header: false, // Ler como matriz
+        complete: (results) => {
+            const planilha = results.data;
+            console.log("Dados CSV processados:", planilha);
+            gerarEstatisticas(planilha);
+        },
+    });
 }
 
 
 function exibirGrafico(dados) {
     const ctx = document.getElementById("naturezaChart").getContext("2d");
 
+    // Verificar se já existe um gráfico e destruí-lo antes de criar um novo
+    if (window.chartInstance) {
+        window.chartInstance.destroy(); // Destrói o gráfico existente
+    }
+
     // Ordenar os dados em ordem decrescente
     const dadosOrdenados = Object.entries(dados).sort((a, b) => b[1] - a[1]); // Maior para menor
     const labels = dadosOrdenados.map(([key]) => key);
     const valores = dadosOrdenados.map(([_, value]) => value);
+
+    const totalIncidencias = valores.reduce((a, b) => a + b, 0);
 
     const cores = [
         "rgba(255, 99, 132, 0.5)", 
@@ -272,7 +282,8 @@ function exibirGrafico(dados) {
         "rgba(255, 159, 64, 1)",
     ];
 
-    new Chart(ctx, {
+    // Criar um novo gráfico com animação suave
+    window.chartInstance = new Chart(ctx, {
         type: "bar",
         data: {
             labels: labels,
@@ -288,12 +299,28 @@ function exibirGrafico(dados) {
         },
         options: {
             responsive: true,
+            maintainAspectRatio: true,
+            animation: {
+                duration: 800, // Duração da animação em milissegundos
+                easing: "linear", // Tipo de suavização (pode ser easeOutQuad, easeInOutQuad, etc.)
+                onComplete: function () {
+                    // O que acontece quando a animação termina (opcional)
+                }
+            },
             plugins: {
                 legend: {
                     display: false,
                 },
                 tooltip: {
                     enabled: true,
+                },
+                title: {
+                    display: true,
+                    text: `Distribuição de Incidências - Total: ${totalIncidencias}`, // Título com o total
+                    font: {
+                        size: 18,
+                        weight: "bold",
+                    },
                 },
                 datalabels: {
                     anchor: "end",
@@ -315,4 +342,8 @@ function exibirGrafico(dados) {
         },
         plugins: [ChartDataLabels], 
     });
+    
+    const canvas = document.getElementById("naturezaChart");
+    canvas.style.width = "100%";
+    canvas.style.height = "auto";
 }
