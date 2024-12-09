@@ -223,7 +223,6 @@ function gerarEstatisticas(planilha) {
             "Invasão à proprio municipal - estadual",
             "Invasão à proprio municipal - estadual / Apoio a GM de Serviço",
             "Arrombamento",
-            "Acampamento em local indevido",
         ],
         Escolta: [
             "Escolta",
@@ -309,6 +308,8 @@ function gerarEstatisticas(planilha) {
             "Infração de trânsito / Fiscalização e policiamento / Denúncia",
             "Veículo abandonado em via pública",
             "Conduzir veículo sem a devida CNH gerando perigo de dano",
+            "Averiguação / Outros / Embriaguez",
+            "Denúncia / Fiscalização e policiamento - tráfego / Infração de trânsito",
         ],
         Violência_doméstica: [
             "Violência doméstica",
@@ -336,6 +337,10 @@ function gerarEstatisticas(planilha) {
         ],
         Localização_de_veículo: [
             "Localização de veículo",
+        ],
+        Acampamento_em_local_proibido: [
+            "ACAMPAMENTO EM ESPAÇO PÚBLICO",
+            "Acampamento em local indevido",
         ],
         Pessoa_indigente: [
             "Pessoa indigente",
