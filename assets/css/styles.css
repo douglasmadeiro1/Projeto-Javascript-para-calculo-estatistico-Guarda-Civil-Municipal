@@ -13,7 +13,25 @@ h1 {
 }
 
 .container {
-    width: 75%;
+    width: 85%;
+    margin: 20px auto;
+    padding: 20px;
+    border-radius: 10px;
+    background: #ffffff;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.header {
+    width: 85%;
+    margin: 20px auto;
+    padding: 20px;
+    border-radius: 10px;
+    background: #ffffff;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.botton {
+    width: 85%;
     margin: 20px auto;
     padding: 20px;
     border-radius: 10px;
@@ -47,9 +65,10 @@ button:hover {
 }
 
 canvas {
+    height: 720px;
     display: block;
     margin: 20px auto;
-    max-height: 720px ;
+    max-height: 100% ;
     max-width: 100%;
 }
 
@@ -67,4 +86,9 @@ canvas {
 @keyframes spin {
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
+}
+
+#naturezaChart {
+    width: 100% !important;
+    height: auto !important;
 }
