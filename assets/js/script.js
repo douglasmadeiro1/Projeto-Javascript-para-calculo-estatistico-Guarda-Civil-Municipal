@@ -77,6 +77,7 @@ function gerarEstatisticas(planilha) {
         Permanencia_Unidade_escolar: [
             "Parada / Permanência Preventiva - Unidade Escolar",
             "Parada / Permanência Preventiva - Unidade Escolar / Operação Saturação",
+            "Operação Saturação / Parada / Permanência Preventiva - Unidade Escolar",
         ],
         Permanencia_feira: [
             "Parada / Permanência  Preventiva - FEIRA LIVRE",
@@ -310,6 +311,7 @@ function gerarEstatisticas(planilha) {
             "Conduzir veículo sem a devida CNH gerando perigo de dano",
             "Averiguação / Outros / Embriaguez",
             "Denúncia / Fiscalização e policiamento - tráfego / Infração de trânsito",
+            "Controle de tráfego"
         ],
         Violência_doméstica: [
             "Violência doméstica",
@@ -362,6 +364,13 @@ function gerarEstatisticas(planilha) {
             "Localização de objetos diversos",
             "Localização de objetos diversos / Averiguação Atitude Suspeita",
         ],
+        Desacato: [
+            "Desinteligência / Desacato",
+            "Desacato / Abordagem a pessoas em atitude suspeita / Porte de drogas para consumo pessoal",
+        ],
+        Desobediência: [
+            'Desobediência',
+        ]
     };
 
     const contagem = {};
